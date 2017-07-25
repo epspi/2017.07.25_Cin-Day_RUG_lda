@@ -1,0 +1,75 @@
+---
+title: "LDA on Spark using sparklyr"
+author: "Eugene Pyatigorsky / Cin-Day RUG"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output: 
+  html_notebook: 
+    highlight: tango
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+---
+------
+
+
+This notebook is available on:
+https://github.com/epspi/2017.07.25_Cin-Day_RUG_lda
+
+The data is available at census.gov:
+https://file.wikileaks.org/file/podesta-emails/
+
+A fully instructive tutorial on `sparklyr` is at:
+http://spark.rstudio.com/
+
+
+------
+
+
+
+```{r setup, include = F}
+
+# Java options
+options(java.parameters = "-Xmx12G")
+
+# Libraries
+library(sparklyr)
+library(dplyr)
+```
+
+
+
+```{r, Spark Connection}
+config <- spark_config()
+# config$spark.executor.memory <- "4G"
+config$spark.driver.memory <- "10G"
+config$`sparklyr.shell.driver-memory` <- "10G"
+sc <- spark_connect(master = "local", version = "2.1.0", hadoop_version = "2.7",
+                    config = config)
+```
+
+
+
+
+
+# What is LDA?
+
+LDA (Latent Dirichlet Allocation) is a set of models for describing textual 
+documents according to what "topics" those documents are about. 
+
+* A topic can be thought of as a collection of keywords most central to the document
+* Topics are actually distributions over the entire vocabulary 
+* Describing a document by its consituent topics instead of its underlying words
+is akin to finding a latent space for the corpus of documents
+* LDA is frequently compared with Latent Semantic Analysis (PCA) for this reason
+
+In short:  
+
+* **Each DOCUMENT is described by a distribution over TOPICS** 
+* **Each TOPIC is a distribution over WORDS**
+
+
+### LDA as a Graphical Model
+
+# LDA in R
+
+# LDA in Spark
